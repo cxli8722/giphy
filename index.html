@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
   <meta charset="utf-8">
-  <title>Animal Buttons</title>
+  <title>Marvel Heroes</title>
 </head>
 
 <body>
@@ -20,12 +20,12 @@
   </div><!-- /.col-lg-6 -->
 </div><!-- /.row -->
 <div id="newbuttons">
-    <button data-animal="spiderman" data-state="still" class="btn btn-info" class="gif">Spiderman</button>
-    <button data-animal="batman" data-state="still"  class="btn btn-info" class="gif">Batman</button>
-    <button data-animal="thor" data-state="still" class="btn btn-info" class="gif">Thor</button>
-    <button data-animal="superman" data-state="still"   class="btn btn-info" class="gif">Superman</button>
-    <button data-animal="ironman" data-state="still"  class="btn btn-info" class="gif">Ironman</button>
-    <button data-animal="wonderwoman" data-state="still"  class="btn btn-info" class="gif">Wonderwoman</button>
+    <button data-hero="spiderman" data-state="still" class="btn btn-info" class="gif">Spiderman</button>
+    <button data-hero="batman" data-state="still"  class="btn btn-info" class="gif">Batman</button>
+    <button data-hero="thor" data-state="still" class="btn btn-info" class="gif">Thor</button>
+    <button data-hero="superman" data-state="still"   class="btn btn-info" class="gif">Superman</button>
+    <button data-hero="ironman" data-state="still"  class="btn btn-info" class="gif">Ironman</button>
+    <button data-hero="wonderwoman" data-state="still"  class="btn btn-info" class="gif">Wonderwoman</button>
   </div>
 
   <div id="gifs-appear-here">
@@ -44,7 +44,7 @@ $( "#addbuttons" ).on("click", function () {
     var value = $( "#inputvalue" ).val().trim();
     console.log(value)
   
-    var newbtn =$("<button >").attr("data-animal", value).text(value);
+    var newbtn =$("<button >").attr("data-hero", value).text(value);
 
 
 
@@ -60,7 +60,7 @@ $( "#addbuttons" ).on("click", function () {
 
 //function to display image when click on the button 
     $("#newbuttons").on("click", "button" ,function() {
-      var animal = $(this).attr("data-animal");
+      var animal = $(this).attr("data-hero");
       //empty before new button is click 
        $("#gifs-appear-here").empty();
 
