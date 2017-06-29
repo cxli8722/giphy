@@ -90,31 +90,26 @@ $( "input" ).on("click", function () {
           var animalstill = $("<img>");
           animalstill.attr("data-state", "still");
 
-      animalstill.attr("data-still", results[i].images.fixed_height_still.url);
-      animalstill.attr("data-anime", results[i].images.fixed_height.url);
+          animalstill.attr("data-still", results[i].images.fixed_height_still.url);
+          animalstill.attr("data-anime", results[i].images.fixed_height.url);
           animalstill.attr("src", results[i].images.fixed_height_still.url);
           animalstill.append(p);
-         animalstill.append(animalstill);
+          animalstill.append(animalstill);
           $("#gifs-appear-here").prepend(animalstill);
    
-
-
-          
-       
-
         };
          
 
 
             $("#gifs-appear-here").on("click", "img", function() {
-console.log("hello")
-          if($(this).attr("data-state")=== "still"){
-          $(this).attr("src", $(this).attr("data-animate"));
-      $(this).attr("data-state", "animate")
+            console.log("hello")
+            if($(this).attr("data-state")=== "still"){
+              $(this).attr("src", $(this).attr("data-anime"));
+              $(this).attr("data-state", "animate")
 
-         }
-         else{ $(this).attr("src", $(this).attr("data-still"));
-      $(this).attr("data-state", "still")
+             }
+            else{ $(this).attr("src", $(this).attr("data-still"));
+            A$(this).attr("data-state", "still")
          }
 
           });
