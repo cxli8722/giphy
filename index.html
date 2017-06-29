@@ -109,7 +109,8 @@ $( "input" ).on("click", function () {
 
              }
             else{ $(this).attr("src", $(this).attr("data-still"));
-            $(this).attr("data-state", "still")
+            $(this).attr("src", $(this).attr("data-still"));
+            $(this).attr("data-state", "still");
          }
 
           });
