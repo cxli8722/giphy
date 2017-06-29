@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+  <meta charset="utf-8">
+  <title>Animal Buttons</title>
+</head>
+
+<body>
+<div class="row">
+  <div class="col-lg-6">
+    <div class="input-group">
+      <input type="text" class="form-control" placeholder="Search for...">
+      <span class="input-group-btn">
+        <button class="btn btn-default" type="button">Search</button>
+      </span>
+    </div><!-- /input-group -->
+  </div><!-- /.col-lg-6 -->
+</div><!-- /.row -->
+<div id="newbuttons">
+    <button data-animal="spiderman" data-state="still" class="btn btn-info" class="gif">Spiderman</button>
+    <button data-animal="batman" data-state="still"  class="btn btn-info" class="gif">Batman</button>
+    <button data-animal="thor" data-state="still" class="btn btn-info" class="gif">Thor</button>
+    <button data-animal="superman" data-state="still"   class="btn btn-info" class="gif">Superman</button>
+    <button data-animal="ironman" data-state="still"  class="btn btn-info" class="gif">Ironman</button>
+    <button data-animal="wonderwoman" data-state="still"  class="btn btn-info" class="gif">Wonderwoman</button>
+  </div>
+
+  <div id="gifs-appear-here">
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script type="text/javascript">
+
+
+
+//generating button 
+
+
+
+$( "input" ).on("click", function () {
+
+    var value = $( this ).val().trim();;
+    console.log(value)
+  
+    var newbtn =$("<button >").attr("data-animal", value).text(value);
+
+
+
+       //ar $something= $('<input/>').attr({ type: 'button', name:'btn1', value:'am button'});
+//now append this to some div called var
+
+   $("#newbuttons").append(newbtn);
+
+
+  
+    console.log(value)
+  });
+ 
+
+
+
+//function to display image when click on the button 
+    $("button").on("click", function() {
+      var animal = $(this).attr("data-animal");
+      //empty before new button is click 
+       $("#gifs-appear-here").empty();
+
+      var queryURL = "http://api.giphy.com/v1/gifs/search?q=" +
+        animal + "&api_key=74f3cfb2a2f8405cb5b617277ce5f494&limit=10";
+
+      $.ajax({
+        url: queryURL,
+        method: "GET"
+      }).done(function(response) {
+        
+
+        var results=response.data;
+
+        console.log(results)
+
+        for (var i=0; i<results.length; i++){
+
+          //variable for still image 
+
+          var animalstill=$("<div>");
+
+          var p =$("<p>").text("rating: " + results[i].rating);
+          var animalstill = $("<img>");
+          animalstill.attr("data-state", "still");
+
+      animalstill.attr("data-still", results[i].images.fixed_height_still.url);
+      animalstill.attr("data-anime", results[i].images.fixed_height.url);
+          animalstill.attr("src", results[i].images.fixed_height_still.url);
+          animalstill.append(p);
+         animalstill.append(animalstill);
+          $("#gifs-appear-here").prepend(animalstill);
+   
+
+
+          
+       
+
+        };
+         
+
+
+            $("#gifs-appear-here").on("click", "img", function() {
+console.log("hello")
+          if($(this).attr("data-state")=== "still"){
+          $(this).attr("src", $(this).attr("data-animate"));
+      $(this).attr("data-state", "animate")
+
+         }
+         else{ $(this).attr("src", $(this).attr("data-still"));
+      $(this).attr("data-state", "still")
+         }
+
+          });
+
+
+     
+ });
+
+   });
+
+  </script>
+</body>
+
+</html>
