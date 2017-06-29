@@ -11,10 +11,10 @@
 <body>
 <div class="row">
   <div class="col-lg-6">
-    <div class="input-group">
-      <input type="text" class="form-control" placeholder="Search for...">
+    <div class="input-group" >
+      <input id="inputvalue" type="text" class="form-control" placeholder="Search for...">
       <span class="input-group-btn">
-        <button class="btn btn-default" type="button">Search</button>
+        <button class="btn btn-default" id="addbuttons" type="button">Search</button>
       </span>
     </div><!-- /input-group -->
   </div><!-- /.col-lg-6 -->
@@ -39,17 +39,14 @@
 
 
 
-$( "input" ).on("click", function () {
+$( "#addbuttons" ).on("click", function () {
 
-    var value = $( this ).val().trim();;
+    var value = $( "#inputvalue" ).val().trim();
     console.log(value)
   
     var newbtn =$("<button >").attr("data-animal", value).text(value);
 
 
-
-       //ar $something= $('<input/>').attr({ type: 'button', name:'btn1', value:'am button'});
-//now append this to some div called var
 
    $("#newbuttons").append(newbtn);
 
@@ -62,7 +59,7 @@ $( "input" ).on("click", function () {
 
 
 //function to display image when click on the button 
-    $("button").on("click", function() {
+    $("#newbuttons").on("click", "button" ,function() {
       var animal = $(this).attr("data-animal");
       //empty before new button is click 
        $("#gifs-appear-here").empty();
