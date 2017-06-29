@@ -3,56 +3,61 @@
 
 <head>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="css/js.css">
+
 
   <meta charset="utf-8">
   <title>Marvel Heroes</title>
 </head>
 
 <body>
-<div class="row">
-  <div class="col-lg-6">
-    <div class="input-group" >
-      <input id="inputvalue" type="text" class="form-control" placeholder="Search for...">
-      <span class="input-group-btn">
-        <button class="btn btn-default" id="addbuttons" type="button">Search</button>
-      </span>
-    </div><!-- /input-group -->
-  </div><!-- /.col-lg-6 -->
-</div><!-- /.row -->
-<div id="newbuttons">
+  <div class="container">
+   <nav class="navbar navbar-inverse">
+    <div class="row">
+      <div class="col-lg-3">
+        <div class="input-group" >
+          <input id="inputvalue" type="text" class="form-control" placeholder="Search for...">
+          <span class="input-group-btn">
+            <button class="btn btn-default" id="addbuttons" type="button">Search</button>
+          </span>
+        </div><!-- /input-group -->
+      </div><!-- /.col-lg-6 -->
+    <!-- /.row -->
+    <br>
+
+    <!--buttons-->
+    <div class="col-lg-10">
+    <div id="newbuttons">
     <button data-hero="spiderman" data-state="still" class="btn btn-info" class="gif">Spiderman</button>
     <button data-hero="batman" data-state="still"  class="btn btn-info" class="gif">Batman</button>
     <button data-hero="thor" data-state="still" class="btn btn-info" class="gif">Thor</button>
     <button data-hero="superman" data-state="still"   class="btn btn-info" class="gif">Superman</button>
     <button data-hero="ironman" data-state="still"  class="btn btn-info" class="gif">Ironman</button>
     <button data-hero="wonderwoman" data-state="still"  class="btn btn-info" class="gif">Wonderwoman</button>
+    </div>
+    </div>
+    </nav>
+
+    <br>
+
+    <!--will dynmatic generate images-->
+  <div class="row" id="gifs-appear-here">
   </div>
 
-  <div id="gifs-appear-here">
-  </div>
+
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script type="text/javascript">
-
-
-
-//generating button 
-
-
+// generate buttons on text input 
 
 $( "#addbuttons" ).on("click", function () {
 
     var value = $( "#inputvalue" ).val().trim();
     console.log(value)
-  
     var newbtn =$("<button >").attr("data-hero", value).text(value);
-
-
-
+    newbtn.addClass("btn btn-info");
    $("#newbuttons").append(newbtn);
-
-
-  
-    console.log(value)
+    //console.log(value)
   });
  
 
@@ -60,65 +65,63 @@ $( "#addbuttons" ).on("click", function () {
 
 //function to display image when click on the button 
     $("#newbuttons").on("click", "button" ,function() {
-      var animal = $(this).attr("data-hero");
+      var heroes = $(this).attr("data-hero");
       //empty before new button is click 
        $("#gifs-appear-here").empty();
 
       var queryURL = "http://api.giphy.com/v1/gifs/search?q=" +
-        animal + "&api_key=74f3cfb2a2f8405cb5b617277ce5f494&limit=10";
+      heroes + "&api_key=74f3cfb2a2f8405cb5b617277ce5f494&limit=8";
 
-      $.ajax({
-        url: queryURL,
-        method: "GET"
-      }).done(function(response) {
+        $.ajax({
+          url: queryURL,
+          method: "GET"
+        }).done(function(response) {
         
 
-        var results=response.data;
+            var results=response.data;
+            //console.log(results)
+// loop through the objects and generate images 
+            for (var i=0; i<results.length; i++){
 
-        console.log(results)
-
-        for (var i=0; i<results.length; i++){
-
-          //variable for still image 
-
-          var animalstill=$("<div>");
-
-          var p =$("<p>").text("rating: " + results[i].rating);
-          var animalstill = $("<img>");
-          animalstill.attr("data-state", "still");
-
-          animalstill.attr("data-still", results[i].images.fixed_height_still.url);
-          animalstill.attr("data-anime", results[i].images.fixed_height.url);
-          animalstill.attr("src", results[i].images.fixed_height_still.url);
-          animalstill.append(p);
-          animalstill.append(animalstill);
-          $("#gifs-appear-here").prepend(animalstill);
-   
-        };
+              var rating=results[i].rating;
+              var imagediv=$("<div>");
+              imagediv.addClass("col-md-3");
+              var imagenail = $("<div>");
+              imagenail.addClass("thumbnail");
+              imagediv.append(imagenail);
+              console.log(results)
+              var p =$("<p>").text("rating: " + rating);
+              var heroesstill = $("<img>");
+              heroesstill.attr("data-state", "still");
+              heroesstill.attr("data-still", results[i].images.fixed_height_still.url);
+              heroesstill.attr("data-anime", results[i].images.fixed_height.url);
+              heroesstill.attr("src", results[i].images.fixed_height_still.url);
+              imagenail.append(heroesstill);
+              var captiondiv= $("<div>");
+              captiondiv.addClass("caption")
+              captiondiv.append(p);
+              imagenail.append(captiondiv);
+              $("#gifs-appear-here").prepend(imagediv);
+            };
          
 
-
+// if and esle statemnt to animate images
             $("#gifs-appear-here").on("click", "img", function() {
             console.log("hello")
             if($(this).attr("data-state")=== "still"){
               $(this).attr("src", $(this).attr("data-anime"));
               $(this).attr("data-state", "animate")
-
              }
             else{ $(this).attr("src", $(this).attr("data-still"));
             $(this).attr("src", $(this).attr("data-still"));
             $(this).attr("data-state", "still");
-         }
+                }
+              });
+        });
 
-          });
+      });
 
+    </script>
 
-     
- });
-
-   });
-
-  </script>
 </body>
-
 </html>
